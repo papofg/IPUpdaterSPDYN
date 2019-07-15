@@ -38,5 +38,5 @@ java -jar IpUpdaterSPDYN-0.0.1.jar
 ### Accessing
 
 * Open your navigator and go to http://[your_address]:[listen_port]
-* The initial users are **dbadmin1** and **dbuser1**
+* The initial users are **dbadmin1** (READ/WRITE) and **dbuser1** (READ ONLY)
 * Their passwords are **123**
