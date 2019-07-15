@@ -16,8 +16,8 @@ Download the project
 ### Installing
 
 * Create a database in your MySQL and executes [ddl.sql](https://github.com/papofg/IPUpdaterSPDYN/blob/master/src/main/resources/ddl.sql)  
-* Edit **spring.datasource.url**, **spring.datasource.username** and **spring.datasource.password** in [application.properties] (https://github.com/papofg/IPUpdaterSPDYN/blob/master/src/main/resources/application.properties) 
-* Add **server.port** in [application.properties] (https://github.com/papofg/IPUpdaterSPDYN/blob/master/src/main/resources/application.properties) to change the listen port (default 8080)
+* Edit **spring.datasource.url**, **spring.datasource.username** and **spring.datasource.password** in [application.properties](https://github.com/papofg/IPUpdaterSPDYN/blob/master/src/main/resources/application.properties) 
+* Add **server.port** in [application.properties](https://github.com/papofg/IPUpdaterSPDYN/blob/master/src/main/resources/application.properties) to change the listen port (default 8080)
 
 ### Suggested IDE
 
