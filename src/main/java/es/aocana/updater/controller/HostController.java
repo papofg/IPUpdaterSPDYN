@@ -89,6 +89,7 @@ public class HostController {
 		} 
 		catch (Throwable e) 
 		{
+			resultadoActualizacion = "KO";
 			e.printStackTrace();
 		}
 		finally 
