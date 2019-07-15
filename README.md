@@ -44,3 +44,7 @@ mvn spring-boot:run
 * Open your navigator and go to http://[your_address]:[listen_port]
 * The initial users are **dbadmin1** (READ/WRITE) and **dbuser1** (READ ONLY)
 * Their passwords are **123**
+
+### Scheduled job
+
+Every 10 minutes the system will check the IP and update it at SPDYN if it changed
