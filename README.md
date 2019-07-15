@@ -34,6 +34,10 @@ mvn package
 ```
 java -jar IpUpdaterSPDYN-0.0.1.jar
 ```
+or
+```
+mvn spring-boot:run
+```
 
 ### Accessing
 
