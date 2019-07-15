@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+   <head>
+      <title>Credits</title>
+      
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1"/>
+      
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
+	  <link rel="stylesheet" href="css/updater.css"/>
+	  <link href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" rel="stylesheet">
+	  
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	  <script src="js/bootstrap.bundle.min.js"></script>
+   </head>
+    
+   <body>
+    	<div th:if="${#request.userPrincipal != null}">
+			<th:block th:include="/_menu"></th:block>
+		</div>
+		
+		
+		<div class="container" style="text-align: center;margin: auto;width: 70%;">
+			<div style="margin: auto;text-align: center;width: 90%;">
+				<h1>Credits</h1>
+				<br/>
+				<h2><a href="https://github.com/papofg">aocana@gmail.com</a> (Author)</h2>
+				<br/>
+		  		<h2><a href="http://www.freepik.com">Icons designed by 0melapics / Freepik</a> (Contributor)</h2>
+			</div>
+			
+		</div>
+	      
+		
+      
+       
+   </body>
+</html>

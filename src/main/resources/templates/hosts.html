@@ -1,0 +1,201 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+   <head>
+      <title>Manage your hosts</title>
+      
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1"/>
+      
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
+	  <link rel="stylesheet" href="css/updater.css"/>
+	  <link href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" rel="stylesheet">
+	  
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	  <script src="js/bootstrap.bundle.min.js"></script>
+	  
+	  <script>
+	  	function deleteHost (idHost)
+	  	{
+	  		document.getElementById("idDelete").value = idHost;
+	  		document.getElementById("formDelete").submit();
+	  	}
+	  </script>
+   </head>
+    
+   <body>
+    	<div th:if="${#request.userPrincipal != null}">
+			<th:block th:include="/_menu"></th:block>
+		</div>
+		
+		
+		<div class="container" style="text-align: center;margin: auto;width: 80%;">
+			<div>
+				<h1>Your Hosts in SPDYN.DE</h1>
+				<br/>
+				
+				<div style="margin: auto;text-align: center;width: 90%;" class="table-responsive">
+					<div style="text-align: right;width: 100%;" sec:authorize="hasRole('ROLE_ADMIN')"><div class="icono_anadir" title="Add" data-toggle="modal" data-target="#myModal_create"></div></div>
+				    <table class="table table-striped">
+				      <thead class="thead-dark">
+				        <tr>
+				          <th scope="col">Id</th>
+				          <th scope="col">IP Address</th>
+				          <th scope="col">Hostname</th>
+				          <th scope="col">Encoded Login Data</th>
+				          <th scope="col" sec:authorize="hasRole('ROLE_ADMIN')">Actions</th>
+				        </tr>
+				      </thead>
+				      <tbody>
+				      	<th:block th:if="${#lists.isEmpty(hostList)}">
+				      		<td colspan="5">No items found</td>
+				      	</th:block>
+				      	<th:block th:each="host : ${hostList}">
+				      		<tr>
+				      			<td scope="row" th:text="${host.id}">11</td>
+				      			<td th:text="${host.ipAddress}">22</td>
+				      			<td th:text="${host.hostname}">33</td>
+				      			<td th:text="${host.encodedLoginData}">44</td>
+								<td sec:authorize="hasRole('ROLE_ADMIN')"><div class="icono_editar" title="Edit" data-toggle="modal" th:attr="data-target='#myModal_' + ${host.id}"></div><div class="icono_eliminar" title="Delete" th:attr="onClick='deleteHost(' + ${host.id} + ')'"></div></td>
+				      		</tr>
+				      	</th:block>
+				      </tbody>
+				    </table>
+				</div>
+			</div>
+		</div>
+	      
+		<th:block th:each="host : ${hostList}">
+			<!-- The Modal -->
+			<div class="modal" th:id="'myModal_' + ${host.id}">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			    
+			      <!-- Modal Header -->
+			      <div class="modal-header">
+			        <h4 class="modal-title" th:text="'Update your host ' + ${host.hostname}">Update your host</h4>
+			        <button type="button" class="close" data-dismiss="modal">&times;</button>
+			      </div>
+			      
+			      <!-- Modal body -->
+			      <div class="modal-body">
+					<form action="#" th:action="@{/updateHost}" th:object="${theHost}" method="post">
+					
+						<div class="input-group form-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text"><i class="fa fa-asterisk"></i></span>
+							</div>
+							<input type="text" class="form-control" placeholder="ip" name='ipAddress' th:value="${host.ipAddress}">
+							<input type="hidden" name='id' th:value="${host.id}">
+						</div>
+						
+						<div class="input-group form-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text"><i class="fa fa-asterisk"></i></span>
+							</div>
+							<input type="text" class="form-control" placeholder="hostname" name='hostname' th:value="${host.hostname}">
+						</div>
+					
+					
+						<div class="input-group form-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text"><i class="fa fa-asterisk"></i></span>
+							</div>
+							<input type="text" class="form-control" placeholder="username" name='username' th:value="${host.username}">
+						</div>
+						
+						<div class="input-group form-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text"><i class="fa fa-asterisk"></i></span>
+							</div>
+							<input type="text" class="form-control" placeholder="password" name='password' th:value="${host.password}">
+						</div>
+						
+						<div class="form-group">
+							<input type="submit" value="Update" class="btn float-right submit_btn">
+						</div>
+								      	
+					</form>
+
+			      </div>
+			      
+			      <!-- Modal footer -->
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+			      </div>
+			      
+			    </div>
+			  </div>
+			</div>
+		</th:block>
+		
+		
+		
+		<div class="modal" id="myModal_create">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			    
+			      <!-- Modal Header -->
+			      <div class="modal-header">
+			        <h4 class="modal-title">Create your new host</h4>
+			        <button type="button" class="close" data-dismiss="modal">&times;</button>
+			      </div>
+			      
+			      <!-- Modal body -->
+			      <div class="modal-body">
+					<form action="#" th:action="@{/createHost}" th:object="${theHost}" method="post">
+					
+						<div class="input-group form-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text"><i class="fa fa-asterisk"></i></span>
+							</div>
+							<input type="text" class="form-control" placeholder="ip" name='ipAddress'>
+							<input type="hidden" name='id'>
+						</div>
+						
+						<div class="input-group form-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text"><i class="fa fa-asterisk"></i></span>
+							</div>
+							<input type="text" class="form-control" placeholder="hostname" name='hostname'>
+						</div>
+					
+					
+						<div class="input-group form-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text"><i class="fa fa-asterisk"></i></span>
+							</div>
+							<input type="text" class="form-control" placeholder="username" name='username'>
+						</div>
+						
+						<div class="input-group form-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text"><i class="fa fa-asterisk"></i></span>
+							</div>
+							<input type="text" class="form-control" placeholder="password" name='password'>
+						</div>
+						
+						<div class="form-group">
+							<input type="submit" value="Create" class="btn float-right submit_btn">
+						</div>
+								      	
+					</form>
+
+			      </div>
+			      
+			      <!-- Modal footer -->
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+			      </div>
+			      
+			    </div>
+			  </div>
+			</div>
+			
+			<form action="#" th:action="@{/deleteHost}" th:object="${theHost}" id="formDelete" method="post">
+				<input type="hidden" id="idDelete" name="id">
+			</form>
+		
+       
+   </body>
+</html>

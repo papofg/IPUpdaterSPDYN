@@ -1,0 +1,137 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+   <head>
+      <title>Manage your users</title>
+      
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1"/>
+      
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
+	  <link rel="stylesheet" href="css/updater.css"/>
+	  <link href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" rel="stylesheet">
+	  
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	  <script src="js/bootstrap.bundle.min.js"></script>
+	  
+	  <script>
+	  	function deleteUser (idUser)
+	  	{
+	  		document.getElementById("idDelete").value = idUser;
+	  		document.getElementById("formDelete").submit();
+	  	}
+	  </script>
+	  
+   </head>
+   
+   <body>
+    	<div th:if="${#request.userPrincipal != null}">
+			<th:block th:include="/_menu"></th:block>
+		</div>
+		
+		
+		<div class="container" style="text-align: center;margin: auto;width: 80%;">
+			<div>
+				<h1>Users of the application</h1>
+				<br/>
+				
+				<div style="margin: auto;text-align: center;width: 90%;" class="table-responsive">
+					<div style="text-align: right;width: 100%;" sec:authorize="hasRole('ROLE_ADMIN')"><div class="icono_anadir" title="Add" data-toggle="modal" data-target="#myModal_create"></div></div>
+				    <table class="table table-striped">
+				      <thead class="thead-dark">
+				        <tr>
+				          <th scope="col">Id</th>
+				          <th scope="col">Username</th>
+				          <th scope="col">Role/s</th>
+				          <th scope="col">Password</th>
+				          <th scope="col" sec:authorize="hasRole('ROLE_ADMIN')">Actions</th>
+				        </tr>
+				      </thead>
+				      <tbody>
+				      	<th:block th:if="${#lists.isEmpty(userList)}">
+				      		<tr><td colspan="5">No items found</td></tr>
+				      	</th:block>
+				      	<th:block th:each="theUser : ${userList}">
+				      		<tr>
+				      			<td scope="row" th:text="${theUser.userId}">11</td>
+				      			<td th:text="${theUser.userName}">22</td>
+				      			<td th:text="${theUser.role}">33</td>
+				      			<td th:text="${theUser.encrytedPassword}">44</td>
+				      			<td sec:authorize="hasRole('ROLE_ADMIN')"><div class="icono_eliminar" title="Delete" th:attr="onClick='deleteUser(' + ${theUser.userId} + ')'"></div></td>
+				      		</tr>
+				      	</th:block>
+				      </tbody>
+				    </table>
+				</div>
+			</div>
+		</div>
+		
+		<div class="modal" id="myModal_create">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			    
+			      <!-- Modal Header -->
+			      <div class="modal-header">
+			        <h4 class="modal-title">Create your new host</h4>
+			        <button type="button" class="close" data-dismiss="modal">&times;</button>
+			      </div>
+			      
+			      <!-- Modal body -->
+			      <div class="modal-body">
+					<form action="#" th:action="@{/createUser}" th:object="${theUser}" method="post">
+					
+						<div class="input-group form-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text"><i class="fa fa-asterisk"></i></span>
+							</div>
+							<input type="text" class="form-control" placeholder="Username" name='userName'>
+							<input type="hidden" name='id'>
+						</div>
+						
+
+						<div class="input-group form-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text"><i class="fa fa-asterisk"></i></span>
+							</div>
+							<input type="password" class="form-control" placeholder="Password" name='encrytedPassword'>
+						</div>
+						
+						<div class="input-group form-group">
+							<ul>
+							  <li>
+							    <input type="radio" 
+							    	name='role' id="roleAdmin"
+							        th:value="ROLE_ADMIN"/>
+							    <label for="roleAdmin">ROLE_ADMIN</label>
+							  </li>
+							  <li>
+							    <input type="radio" 
+							    	name='role' id="roleUser"
+							        th:value="ROLE_USER" checked="checked" />
+							    <label for="roleUser">ROLE_USER</label>
+							  </li>
+							</ul>
+						</div>
+
+						<div class="form-group">
+							<input type="submit" value="Create" class="btn float-right submit_btn">
+						</div>
+					</form>
+			      </div>
+			      
+			      <!-- Modal footer -->
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+		
+		
+		<form action="#" th:action="@{/deleteUser}" th:object="${theUser}" id="formDelete" method="post">
+			<input type="hidden" id="idDelete" name="userId">
+		</form>
+		
+		
+	</body>
+</html>
