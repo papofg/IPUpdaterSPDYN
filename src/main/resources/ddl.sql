@@ -42,8 +42,6 @@ CREATE TABLE IF NOT EXISTS myhosts (
 
 
 
-insert into myhosts (ipAddress,hostname,encodedLoginData) values ('90.164.117.48','kkkkkkk.spdns.org','cGF0YXRhQGdtYWlsLmNvbTpwYXRhdGE=');
-
 ----------------------
 ----------------------
 ----------------------
