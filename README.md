@@ -32,10 +32,6 @@ mvn package
 ### Deployment
 
 ```
-java -jar IpUpdaterSPDYN-0.0.1.jar
-```
-or
-```
 mvn spring-boot:run
 ```
 
